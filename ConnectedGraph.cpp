@@ -86,7 +86,7 @@ class Graph{
             }
         }
 
-        Graph(){ }; //defawt constwuctor *uwu* don't touch XD
+        Graph(){ };
 };
 
 
