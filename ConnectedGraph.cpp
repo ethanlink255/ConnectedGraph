@@ -36,6 +36,7 @@ class Graph{
 
                 node->tail = new Element(v, nullptr);
             }
+            els++;
         }
 
         void remove(int n, int v){
@@ -53,7 +54,7 @@ class Graph{
                     cnode = pnode->tail;
                 } else break;
             }
-
+            els--;
         }
 
         void prettyprint(){
@@ -70,7 +71,22 @@ class Graph{
             }
         }
 
-        Graph(){ };
+        void components(int v){
+            int mark[els];
+            int parent[els];
+
+            for (int v = 0; v < els; v++){
+                parent[v] = -1;
+            }
+
+            for(int v = 0; v < els; v++){
+                if(mark[v] = 0){
+                    dfs(v); //Not real
+                }
+            }
+        }
+
+        Graph(){ }; //defawt constwuctor *uwu* don't touch XD
 };
 
 
@@ -87,5 +103,3 @@ int main(){
 
     g.prettyprint();
 }
-
-
