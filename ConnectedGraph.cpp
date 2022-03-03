@@ -1,4 +1,8 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -101,7 +105,7 @@ int main(){
     Graph g = Graph(atoi(&input[0]));
 
     for(int i = 2; i < input.length(); i += 4){
-        if(input[i] != -1) g.add(atoi(&input[i]), atoi(&input[i + 2]));  
+        if(atoi(&input[i]) != -1) g.add(atoi(&input[i]), atoi(&input[i + 2]));  
     }
 
     g.prettyprint();
