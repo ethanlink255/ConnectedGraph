@@ -19,13 +19,11 @@ struct Element{
 class Graph{
     private: 
         Element *HNodes;
-        int nodes;
-	int els; //root nodes
+	    int els; //root nodes
 	
     public: 
         Graph(int n){
             els = n;
-	    nodes = n;
             HNodes = (Element*) malloc(sizeof(Element) * (n - 1));
             for(int i = 0; i < n; i++){
                 HNodes[i].head = i;
@@ -43,7 +41,6 @@ class Graph{
 
                 node->tail = new Element(v, nullptr);
             }
-            els++;
         }
 
         void remove(int n, int v){
@@ -61,11 +58,10 @@ class Graph{
                     cnode = pnode->tail;
                 } else break;
             }
-            els--;
         }
 
         void prettyprint(){
-            for(int i = 0; i < nodes; i++){
+            for(int i = 0; i < els; i++){
                 cout << i << ": ";
                 Element *cnode = &HNodes[i];
                 while(cnode->tail != nullptr){
@@ -78,20 +74,30 @@ class Graph{
             }
         }
 
-         void dfs(int v, int *mark){
-            mark[v] = 1;
-            for (int i = 0; i < els; i++){
-                if (mark[i] == 0) {
-                    printf("NODE %i\n", v);
-                    dfs(i, mark);
+         void dfs(int v, int* mark){
+            printf("INDEX V %i\n", v);
+            mark[v] = 1; //BIG BAD
+            printf("NODE MARKED %i, STATUS: %i\n", v, mark[v]);
+            Element* cnode = &HNodes[v];
+            printf("CNODE PRE: %i\n", cnode->head);
+            while (cnode != nullptr){
+                cnode = cnode->tail;
+                printf("NNODE: %i\n", cnode->head);
+                if(cnode->head >= 5 || cnode->tail > 0) printf("I AM BAD");
+                if (mark[cnode->head] == 0 && cnode != nullptr) {
+                    printf("I AM THE ONE AND ONLY NODE %i\n", cnode->head);
+                    int chead = cnode->head;       
+                    dfs(chead, mark);               
                 }
             }
         }
 
         void dfs(int v){ 
             int *mark = (int*) malloc(sizeof(int) * (els));
+            printf("MARK SIZE %i\n", els);
             for(int i = 0; i < els; i++) mark[i] = 0;
             dfs(v, mark);
+            
         }
 
        
