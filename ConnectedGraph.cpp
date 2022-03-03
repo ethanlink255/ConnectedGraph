@@ -15,10 +15,13 @@ struct Element{
 class Graph{
     private: 
         Element *HNodes;
-        int els;
+        int nodes;
+	int els; //root nodes
+	
     public: 
         Graph(int n){
             els = n;
+	    nodes = n;
             HNodes = (Element*) malloc(sizeof(Element) * (n - 1));
             for(int i = 0; i < n; i++){
                 HNodes[i].head = i;
@@ -58,7 +61,7 @@ class Graph{
         }
 
         void prettyprint(){
-            for(int i = 0; i < els; i++){
+            for(int i = 0; i < nodes; i++){
                 cout << i << ": ";
                 Element *cnode = &HNodes[i];
                 while(cnode->tail != nullptr){
