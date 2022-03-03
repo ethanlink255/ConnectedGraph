@@ -78,6 +78,23 @@ class Graph{
             }
         }
 
+         void dfs(int v, int *mark){
+            mark[v] = 1;
+            for (int i = 0; i < els; i++){
+                if (mark[i] == 0) {
+                    printf("NODE %i\n", v);
+                    dfs(i, mark);
+                }
+            }
+        }
+
+        void dfs(int v){ 
+            int *mark = (int*) malloc(sizeof(int) * (els));
+            for(int i = 0; i < els; i++) mark[i] = 0;
+            dfs(v, mark);
+        }
+
+       
         void components(int v){
             int mark[els];
             int parent[els];
@@ -87,11 +104,13 @@ class Graph{
             }
 
             for(int v = 0; v < els; v++){
-                if(mark[v] = 0){
+                if(mark[v] == 0){
                     dfs(v); //Not real
                 }
             }
         }
+
+
 
         Graph(){ };
 };
@@ -109,4 +128,5 @@ int main(){
     }
 
     g.prettyprint();
+    g.dfs(2);
 }
