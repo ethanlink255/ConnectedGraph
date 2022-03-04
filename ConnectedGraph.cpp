@@ -57,6 +57,8 @@ class Graph{
         void remove(int n, int v){
             Element *pnode = &HNodes[n];
             Element *cnode = HNodes[n].tail;
+            Element *rnode = &HNodes[v];
+            Element *fnode = HNodes[v].tail;
 
             while (1){
                 if(cnode->head == v){
@@ -67,6 +69,18 @@ class Graph{
                 if(cnode->tail != nullptr){
                     pnode = cnode;
                     cnode = pnode->tail;
+                } else break;
+            }
+
+             while (1){
+                if(fnode->head == v){
+                    rnode->tail = nullptr;
+                    delete fnode;
+                    break;
+                } 
+                if(fnode->tail != nullptr){
+                    rnode = cnode;
+                    cnode = rnode->tail;
                 } else break;
             }
         }
