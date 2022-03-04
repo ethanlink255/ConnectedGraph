@@ -41,6 +41,17 @@ class Graph{
 
                 node->tail = new Element(v, nullptr);
             }
+
+            if(HNodes[v].tail == nullptr) HNodes[v].tail = new Element(n, nullptr);
+            else{
+                Element *node = &HNodes[v];
+                do{
+                    node = node->tail;
+                } while(node->tail != nullptr);
+
+                node->tail = new Element(n, nullptr);
+            }
+
         }
 
         void remove(int n, int v){
@@ -74,20 +85,14 @@ class Graph{
             }
         }
 
-         void dfs(int v, int* mark){
-            printf("INDEX V %i\n", v);
+        void dfs(int v, int* mark){
             mark[v] = 1; //BIG BAD
-            printf("NODE MARKED %i, STATUS: %i\n", v, mark[v]);
             Element* cnode = &HNodes[v];
-            printf("CNODE PRE: %i\n", cnode->head);
-            while (cnode != nullptr){
+            while (cnode->tail != nullptr){
                 cnode = cnode->tail;
-                printf("NNODE: %i\n", cnode->head);
-                if(cnode->head >= 5 || cnode->tail > 0) printf("I AM BAD");
-                if (mark[cnode->head] == 0 && cnode != nullptr) {
-                    printf("I AM THE ONE AND ONLY NODE %i\n", cnode->head);
-                    int chead = cnode->head;       
-                    dfs(chead, mark);               
+                if (mark[cnode->head] == 0 && cnode != nullptr) { 
+                    printf("NODE %i\n", cnode->head);
+                    dfs(cnode->head, mark);               
                 }
             }
         }
@@ -96,6 +101,7 @@ class Graph{
             int *mark = (int*) malloc(sizeof(int) * (els));
             printf("MARK SIZE %i\n", els);
             for(int i = 0; i < els; i++) mark[i] = 0;
+            printf("NODE %i\n", v);
             dfs(v, mark);
             
         }
@@ -134,5 +140,6 @@ int main(){
     }
 
     g.prettyprint();
+   // g.oldprint();
     g.dfs(2);
 }
