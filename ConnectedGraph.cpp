@@ -99,25 +99,27 @@ class Graph{
             }
         }
 
-        void dfs(int v, int* mark){
+        int* dfs(int v, int* mark, int* visited, int found){
             mark[v] = 1; //BIG BAD
             Element* cnode = &HNodes[v];
             while (cnode->tail != nullptr){
                 cnode = cnode->tail;
                 if (mark[cnode->head] == 0 && cnode != nullptr) { 
-                    printf("NODE %i\n", cnode->head);
-                    dfs(cnode->head, mark);               
+                    visited[found++] = cnode->head;
+                    dfs(cnode->head, mark, visited, found);               
                 }
             }
         }
 
-        void dfs(int v){ 
+        int* dfs(int v){ 
             int *mark = (int*) malloc(sizeof(int) * (els));
-            printf("MARK SIZE %i\n", els);
+            int *visited = (int*) malloc(sizeof(int) * (els));       
             for(int i = 0; i < els; i++) mark[i] = 0;
-            printf("NODE %i\n", v);
-            dfs(v, mark);
-            
+            visited[0] = v;
+            dfs(v, mark, visited, 1);
+            delete mark;
+
+            return visited;
         }
 
        
@@ -136,6 +138,10 @@ class Graph{
             }
         }
 
+        int size(){
+            return els;
+        }
+
 
 
         Graph(){ };
@@ -150,10 +156,22 @@ int main(){
     Graph g = Graph(atoi(&input[0]));
 
     for(int i = 2; i < input.length(); i += 4){
-        if(atoi(&input[i]) != -1) g.add(atoi(&input[i]), atoi(&input[i + 2]));  
+        if(atoi(&input[i]) != -1) { 
+            if(atoi(&input[i]) < atoi(&input[0]) && atoi(&input[i + 2]) < atoi(&input[0]))  g.add(atoi(&input[i]), atoi(&input[i + 2]));
+            else{
+                cout << "Invalid Data ... STOP" << endl;
+                exit(-1);
+            }
+           
+        } else break;
     }
 
     g.prettyprint();
-   // g.oldprint();
-    g.dfs(2);
+
+    cout << "Result of DFS, with starting vertex of 2" << endl;
+    int *search = g.dfs(2);
+    for(int i = 0; i < g.size(); i++ ){
+        cout << search[i] << " ";
+    }
+    cout << endl;
 }
