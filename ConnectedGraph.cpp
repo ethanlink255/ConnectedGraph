@@ -17,11 +17,11 @@ struct Element{
 };
 
 class Graph{
-    private: 
+    private:
         Element *HNodes;
-	    int els; //root nodes
-	
-    public: 
+	int els; //root nodes
+
+    public:
         Graph(int n){
             els = n;
             HNodes = (Element*) malloc(sizeof(Element) * (n - 1));
@@ -99,7 +99,7 @@ class Graph{
             }
         }
 
-        int* dfs(int v, int* mark, int* visited, int found){
+        void dfs(int v, int* mark, int* visited, int found){
             mark[v] = 1; //BIG BAD
             Element* cnode = &HNodes[v];
             while (cnode->tail != nullptr){
@@ -113,30 +113,30 @@ class Graph{
 
         int* dfs(int v){ 
             int *mark = (int*) malloc(sizeof(int) * (els));
-            int *visited = (int*) malloc(sizeof(int) * (els));       
-            for(int i = 0; i < els; i++) mark[i] = 0;
-            visited[0] = v;
+            int *visited = (int*) malloc(sizeof(int) * (els));    //this
+            for(int i = 0; i < els; i++) {
+		mark[i] = 0;
+		visited[i] = -1;
+	    }
+	    visited[0] = v;
             dfs(v, mark, visited, 1);
             delete mark;
 
             return visited;
         }
 
-       
-        void components(int v){
-            int mark[els];
-            int parent[els];
+/*        void components(){
+		for(int i = 0; i < els; i++){
+		/*	int* res = dfs(i);
+			cout << i << ": ";
+			int r = 0;
+			while (r < els && res[r] != -1){
+				cout << res[r++];
+			}
+			cout << endl;
 
-            for (int v = 0; v < els; v++){
-                parent[v] = -1;
-            }
-
-            for(int v = 0; v < els; v++){
-                if(mark[v] == 0){
-                    dfs(v); //Not real
-                }
-            }
-        }
+		}
+        }*/
 
         int size(){
             return els;
@@ -154,7 +154,7 @@ int main(){
     getline(cin, input);
     
     Graph g = Graph(atoi(&input[0]));
-
+  
     for(int i = 2; i < input.length(); i += 4){
         if(atoi(&input[i]) != -1) { 
             if(atoi(&input[i]) < atoi(&input[0]) && atoi(&input[i + 2]) < atoi(&input[0]))  g.add(atoi(&input[i]), atoi(&input[i + 2]));
@@ -173,5 +173,8 @@ int main(){
     for(int i = 0; i < g.size(); i++ ){
         cout << search[i] << " ";
     }
+
+//    g.components();
+
     cout << endl;
 }
