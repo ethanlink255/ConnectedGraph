@@ -165,9 +165,7 @@ class Graph{
 
         Graph(){ };
 
-        ~Graph(){
-            delete HNodes;
-        }
+        ~Graph(){}
 };
 
 
