@@ -165,7 +165,9 @@ class Graph{
 
         Graph(){ };
 
-        ~Graph(){}
+        ~Graph(){
+            free(HNodes);
+        };
 };
 
 
